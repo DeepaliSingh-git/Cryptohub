@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import { signInWithPopup, signOut } from "firebase/auth";
+import { auth, provider } from "./firebase";
+import CryptoTable from "./CryptoTable";
+import GeminiChat from "./GeminiChat";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+export default function App() {
+const [user, setUser] = useState(null);
+
+
+useEffect(() => {
+auth.onAuthStateChanged(setUser);
+}, []);
+
+
+return (
+<div className="p-6">
+<h1 className="text-3xl font-bold">🚀 CRYPTOHUB</h1>
+
+
+{!user ? (
+<button onClick={() => signInWithPopup(auth, provider)}>
+Sign in with Google
+</button>
+) : (
+<>
+<button onClick={() => signOut(auth)}>Logout</button>
+<CryptoTable />
+<GeminiChat />
+</>
+)}
+</div>
+);
 }
-
-export default App;

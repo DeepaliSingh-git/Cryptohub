@@ -1,0 +1,63 @@
+type User @table {
+  email: String!
+  passwordHash: String!
+  createdAt: Timestamp!
+  displayName: String
+  profilePictureUrl: String
+}
+
+type Cryptocurrency @table {
+  name: String!
+  symbol: String!
+  coingeckoId: String!
+  createdAt: Timestamp!
+  description: String
+  logoUrl: String
+}
+
+type Portfolio @table {
+  user: User!
+  name: String!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  description: String
+}
+
+type PortfolioAsset @table {
+  portfolio: Portfolio!
+  cryptocurrency: Cryptocurrency!
+  quantity: Float!
+  purchasePrice: Float!
+  createdAt: Timestamp!
+  notes: String
+}
+
+type ExchangeAccount @table {
+  user: User!
+  exchangeName: String!
+  apiKey: String!
+  apiSecret: String!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  lastSyncedAt: Timestamp
+}
+
+type NewsArticle @table {
+  title: String!
+  source: String!
+  url: String!
+  publishedAt: Timestamp!
+  createdAt: Timestamp!
+  imageUrl: String
+  summary: String
+}
+
+type PriceAlert @table {
+  user: User!
+  cryptocurrency: Cryptocurrency!
+  targetPrice: Float!
+  alertType: String!
+  status: String!
+  createdAt: Timestamp!
+  triggeredAt: Timestamp
+}
